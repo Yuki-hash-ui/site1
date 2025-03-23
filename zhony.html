@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход и Регистрация</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #333333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-btn {
+            background-color: #555555;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-btn:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .tab-btn:nth-child(2) {
+            border-radius: 0;
+        }
+
+        .tab-btn:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tab-btn.active {
+            background-color: #777777;
+        }
+
+        /* Добавляем свечение для кнопок */
+        .tab-btn:hover, .tab-btn.active {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .container {
+            background-color: transparent;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+            display: none;
+        }
+
+        .container.active {
+            display: block;
+        }
+
+        .form-container {
+            background-color: #444444;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border: none;
+            border-radius: 8px;
+            background-color: #555555;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            background-color: #666666;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaaaaa;
+            font-size: 18px;
+        }
+
+        button[type="submit"] {
+            background-color: #333333;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #357abd;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .form-footer {
+            margin-top: 20px;
+            color: #aaaaaa;
+            font-size: 14px;
+        }
+
+        .form-footer a {
+            color: #4a90e2;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: #357abd;
+            text-decoration: underline;
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('login')">Вход</button>
+            <button class="tab-btn" onclick="showTab('register')">Регистрация</button>
+            <button class="tab-btn" onclick="showTab('recover')">Восстановление</button>
+        </div>
+
+        <!-- Форма входа -->
+        <div id="login" class="container active">
+            <div class="form-container">
+                <h2>Вход в аккаунт</h2>
+                <form id="login-form" onsubmit="redirectToMain(event)">
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" placeholder="Пароль" required>
+                    </div>
+                    <button type="submit">Войти</button>
+                    <div class="form-footer">
+                        <p>Забыли пароль? <a href="#" onclick="showTab('recover')">Восстановить</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Форма регистрации -->
+        <div id="register" class="container">
+            <div class="form-container">
+                <h2>Создать аккаунт</h2>
+                <form id="register-form" onsubmit="redirectToMain(event)">
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="text" placeholder="Имя пользователя" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" placeholder="Пароль" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" placeholder="Подтвердите пароль" required>
+                    </div>
+                    <button type="submit">Зарегистрироваться</button>
+                    <div class="form-footer">
+                        <p>Уже есть аккаунт? <a href="#" onclick="showTab('login')">Войти</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Форма восстановления пароля -->
+        <div id="recover" class="container">
+            <div class="form-container">
+                <h2>Восстановление пароля</h2>
+                <form id="recover-form" onsubmit="showRecoveryMessage(event)">
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" placeholder="Введите ваш Email" required>
+                    </div>
+                    <button type="submit">Восстановить пароль</button>
+                    <div class="success-message" id="recovery-message">
+                        Инструкции по восстановлению пароля отправлены на ваш Email
+                    </div>
+                    <div class="form-footer">
+                        <p>Вспомнили пароль? <a href="#" onclick="showTab('login')">Войти</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Скрыть все контейнеры
+            document.querySelectorAll('.container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Показать выбранный контейнер
+            document.getElementById(tabId).classList.add('active');
+            
+            // Обновить активную кнопку
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Найти кнопку, которая соответствует выбранной вкладке
+            let activeTabIndex;
+            if (tabId === 'login') activeTabIndex = 0;
+            else if (tabId === 'register') activeTabIndex = 1;
+            else if (tabId === 'recover') activeTabIndex = 2;
+            
+            document.querySelectorAll('.tab-btn')[activeTabIndex].classList.add('active');
+            
+            // Скрыть сообщение об успешном восстановлении при переключении вкладок
+            if (document.getElementById('recovery-message')) {
+                document.getElementById('recovery-message').style.display = 'none';
+            }
+        }
+        
+        function showRecoveryMessage(event) {
+            event.preventDefault();
+            const form = document.getElementById('recover-form');
+            const email = form.querySelector('input[type="email"]').value;
+            
+            if (email) {
+                document.getElementById('recovery-message').style.display = 'block';
+                form.reset();
+            }
+        }
+        
+        function redirectToMain(event) {
+            event.preventDefault();
+            
+            // Проверяем, что все поля заполнены
+            const form = event.target;
+            const inputs = form.querySelectorAll('input[required]');
+            let allFilled = true;
+            
+            inputs.forEach(input => {
+                if (!input.value) {
+                    allFilled = false;
+                }
+            });
+            
+            // Если все поля заполнены, перенаправляем на main1.html
+            if (allFilled) {
+                window.location.href = 'main1.html';
+            }
+        }
+    </script>
+</body>
+</html>

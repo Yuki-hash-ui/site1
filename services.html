@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #222222;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Верхняя панель с логотипом и кнопками */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #333333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background-color: #111111;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .nav-btn:hover {
+            background-color: #333333;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-btn.active {
+            background-color: white;
+            color: #111111;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Заголовок страницы */
+        .page-title {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .page-title h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .page-title p {
+            font-size: 18px;
+            color: #aaaaaa;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Секция услуг */
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Категории услуг */
+        .service-categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: #333333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-btn:hover {
+            background-color: #444444;
+        }
+
+        .category-btn.active {
+            background-color: #4a90e2;
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+        }
+
+        /* Карточки услуг */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .service-card {
+            background-color: #333333;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .service-image {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #4a90e2;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .service-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .service-description {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .service-features {
+            margin-bottom: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #aaaaaa;
+        }
+
+        .feature-icon {
+            color: #4a90e2;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .service-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .service-price span {
+            font-size: 14px;
+            color: #aaaaaa;
+            font-weight: normal;
+        }
+
+        .order-btn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .order-btn:hover {
+            background-color: #357abd;
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+        }
+
+        /* Секция "Почему выбирают нас" */
+        .why-us-section {
+            background-color: #333333;
+            padding: 60px 20px;
+            margin-top: 40px;
+        }
+
+        .why-us-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #4a90e2;
+        }
+
+        .section-header p {
+            color: #aaaaaa;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            font-size: 40px;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .benefit-description {
+            color: #aaaaaa;
+            line-height: 1.5;
+        }
+
+        /* Секция FAQ */
+        .faq-section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            background-color: #333333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .faq-question {
+            padding: 20px;
+            background-color: #444444;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #555555;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #cccccc;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-question {
+            background-color: #4a90e2;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 20px;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-title h1 {
+                font-size: 36px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя панель с логотипом и кнопками -->
+    <header class="header">
+        <div class="logo">
+            <img src="dragon.png" alt="Логотип компании">
+        </div>
+        <div class="nav-buttons">
+            <a href="main1.html" class="nav-btn">Главная</a>
+            <a href="about-contact.html" class="nav-btn">О нас</a>
+            <a href="services.html" class="nav-btn active">Услуги</a>
+            <a href="index.html" class="nav-btn">Выход</a>
+        </div>
+    </header>
+
+    <!-- Заголовок страницы -->
+    <div class="page-title">
+        <h1>Наши услуги</h1>
+        <p>Мы предлагаем широкий спектр услуг для решения ваших бизнес-задач. Выберите подходящую услугу или свяжитесь с нами для получения индивидуального предложения.</p>
+    </div>
+        <!-- Карточки услуг -->
+        <div class="services-grid">
+            <!-- Услуга 1 -->
+            <div class="service-card" data-category="web">
+                <div class="service-image">
+                    <img src="site.png" alt="">
+                    <div class="service-badge">Популярное</div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Разработка веб-сайта</h3>
+                    <p class="service-description">
+                        Создание современного, адаптивного и функционального веб-сайта для вашего бизнеса. Мы разрабатываем сайты любой сложности: от лендингов до крупных порталов.
+                    </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Адаптивный дизайн</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>SEO-оптимизация</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Интеграция с CMS</span>
+                        </div>
+                    </div>
+                    <div class="service-price">
+                        от 300 000 ₸ <span>/ проект</span>
+                    </div>
+                    <a href="pay.html?service=Разработка веб-сайта&price=300000" class="order-btn">Заказать услугу</a>
+                </div>
+            </div>
+
+            <!-- Услуга 2 -->
+            <div class="service-card" data-category="mobile">
+                <div class="service-image">
+                    <img src="apps.png" alt="">
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Разработка мобильного приложения</h3>
+                    <p class="service-description">
+                        Создание нативных и кроссплатформенных мобильных приложений для iOS и Android. Мы разрабатываем приложения с учетом последних тенденций и требований рынка.
+                    </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>iOS и Android</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Интеграция с API</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Публикация в магазинах</span>
+                        </div>
+                    </div>
+                    <div class="service-price">
+                        от 900 000 ₸ <span>/ проект</span>
+                    </div>
+                    <a href="pay.html?service=Разработка мобильного приложения&price=900000" class="order-btn">Заказать услугу</a>
+                </div>
+            </div>
+
+            <!-- Услуга 3 -->
+            <div class="service-card" data-category="design">
+                <div class="service-image">
+                    <img src="UI.png" alt="">
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">UI/UX Дизайн</h3>
+                    <p class="service-description">
+                        Разработка интуитивно понятного и привлекательного интерфейса для вашего продукта. Мы создаем дизайн, который не только красив, но и удобен для пользователей.
+                    </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Прототипирование</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Пользовательские сценарии</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Тестирование интерфейса</span>
+                        </div>
+                    </div>
+                    <div class="service-price">
+                        от 240 000 ₸ <span>/ проект</span>
+                    </div>
+                    <a href="pay.html?service=UI/UX Дизайн&price=240000" class="order-btn">Заказать услугу</a>
+                </div>
+            </div>
+
+            <!-- Услуга 4 -->
+            <div class="service-card" data-category="marketing">
+                <div class="service-image">
+                    <img src="seo.png" alt="">
+                    <div class="service-badge">Скидка 15%</div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">SEO Продвижение</h3>
+                    <p class="service-description">
+                        Комплексное продвижение вашего сайта в поисковых системах. Мы помогаем увеличить органический трафик и повысить позиции в поисковой выдаче.
+                    </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Аудит сайта</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Оптимизация контента</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Анализ конкурентов</span>
+                        </div>
+                    </div>
+                    <div class="service-price">
+                        от 180 000 ₸ <span>/ месяц</span>
+                    </div>
+                    <a href="pay.html?service=SEO Продвижение&price=180000" class="order-btn">Заказать услугу</a>
+                </div>
+            </div>
+
+            <!-- Услуга 5 -->
+            <div class="service-card" data-category="web">
+                <div class="service-image">
+                    <img src="shop.png" alt="">
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Разработка интернет-магазина</h3>
+                    <p class="service-description">
+                        Создание полнофункционального интернет-магазина с интеграцией платежных систем и CRM. Мы разрабатываем удобные и эффективные решения для электронной коммерции.
+                    </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Каталог товаров</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Платежные системы</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Личный кабинет</span>
+                        </div>
+                    </div>
+                    <div class="service-price">
+                        от 600 000 ₸ <span>/ проект</span>
+                    </div>
+                    <a href="pay.html?service=Разработка интернет-магазина&price=600000" class="order-btn">Заказать услугу</a>
+                </div>
+            </div>
+
+            <!-- Услуга 6 -->
+            <div class="service-card" data-category="marketing">
+                <div class="service-image">
+                    <img src="smm.png" alt="">
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">SMM Продвижение</h3>
+                    <p class="service-description">
+                        Комплексное продвижение вашего бизнеса в социальных сетях. Мы помогаем увеличить узнаваемость бренда и привлечь новых клиентов.
+                    </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Стратегия продвижения</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Создание контента</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span>Таргетированная реклама</span>
+                        </div>
+                    </div>
+                    <div class="service-price">
+                        от 120 000 ₸ <span>/ месяц</span>
+                    </div>
+                    <a href="pay.html?service=SMM Продвижение&price=120000" class="order-btn">Заказать услугу</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция "Почему выбирают нас" -->
+    <section class="why-us-section">
+        <div class="why-us-container">
+            <div class="section-header">
+                <h2>Почему выбирают нас</h2>
+                <p>Мы стремимся предоставлять услуги высочайшего качества и делать все возможное, чтобы наши клиенты были довольны результатом.</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="benefit-title">Соблюдение сроков</h3>
+                    <p class="benefit-description">
+                        Мы ценим ваше время и всегда выполняем проекты в согласованные сроки.
+                    </p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="benefit-title">Высокое качество</h3>
+                    <p class="benefit-description">
+                        Мы гарантируем высокое качество всех наших услуг и продуктов.
+                    </p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="benefit-title">Опытная команда</h3>
+                    <p class="benefit-description">
+                        Наша команда состоит из опытных профессионалов в своей области.
+                    </p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="benefit-title">Поддержка клиентов</h3>
+                    <p class="benefit-description">
+                        Мы всегда на связи и готовы ответить на любые ваши вопросы.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция FAQ -->
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>Часто задаваемые вопросы</h2>
+            <p>Ответы на наиболее распространенные вопросы о наших услугах</p>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Сколько времени занимает разработка веб-сайта?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Сроки разработки веб-сайта зависят от его сложности и функциональности. Простой лендинг может быть готов за 1-2 недели, в то время как сложный портал или интернет-магазин может занять 2-3 месяца. Мы всегда обсуждаем сроки индивидуально для каждого проекта.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Какие платформы вы используете для разработки мобильных приложений?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Мы разрабатываем нативные приложения для iOS (Swift) и Android (Kotlin/Java), а также кроссплатформенные решения с использованием Flutter, React Native и других современных технологий. Выбор платформы зависит от требований проекта и бюджета.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Предоставляете ли вы техническую поддержку после завершения проекта?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Да, мы предоставляем техническую поддержку и сопровождение всех наших проектов. После завершения основной разработки мы предлагаем различные пакеты поддержки, которые включают обновления, исправление ошибок и консультации.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Как происходит процесс оплаты услуг?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Обычно мы работаем по предоплате 50% от стоимости проекта, оставшаяся сумма оплачивается после завершения работ. Для крупных проектов мы можем предложить поэтапную оплату в соответствии с выполнением определенных этапов работ. Все условия оплаты фиксируются в договоре.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Функция для фильтрации услуг по категориям
+        function filterServices(category) {
+            // Получаем все карточки услуг
+            const cards = document.querySelectorAll('.service-card');
+            
+            // Получаем все кнопки категорий
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            
+            // Удаляем класс active у всех кнопок
+            categoryBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Добавляем класс active к нажатой кнопке
+            event.target.classList.add('active');
+            
+            // Показываем или скрываем карточки в зависимости от выбранной категории
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Функция для открытия/закрытия FAQ вопросов
+        function toggleFaq(element) {
+            // Получаем родительский элемент (faq-item)
+            const faqItem = element.parentNode;
+            
+            // Проверяем, активен ли элемент
+            if (faqItem.classList.contains('active')) {
+                // Если активен, то деактивируем
+                faqItem.classList.remove('active');
+            } else {
+                // Если не активен, то активируем
+                faqItem.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

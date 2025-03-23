@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в систему</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #333333;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(45deg, #333333 25%, transparent 25%, transparent 75%, #333333 75%), 
+                              linear-gradient(45deg, #333333 25%, transparent 25%, transparent 75%, #333333 75%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+
+        .login-container {
+            background-color: #333333;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, #777777, #555555, #777777);
+            opacity: 0.1;
+            transform: rotate(45deg);
+            z-index: 0;
+        }
+
+        .login-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaaaaa;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: none;
+            border-radius: 8px;
+            background-color: #555555;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            background-color: #666666;
+            outline: none;
+            box-shadow: 0 0 10px rgba(150, 150, 150, 0.5);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #777777;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #888888;
+            box-shadow: 0 0 15px rgba(150, 150, 150, 0.5);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaaaaa;
+        }
+
+        .options a {
+            color: #bbbbbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .options a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: #aaaaaa;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #666666;
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #555555;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-btn.facebook {
+            background-color: #5d5d5d;
+        }
+
+        .social-btn.google {
+            background-color: #6d6d6d;
+        }
+
+        .social-btn.twitter {
+            background-color: #7d7d7d;
+        }
+
+        .register-link {
+            margin-top: 30px;
+            color: #aaaaaa;
+        }
+
+        .register-link a {
+            color: #bbbbbb;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .success-message {
+            background-color: rgba(150, 150, 150, 0.2);
+            border: 1px solid #999999;
+            color: #cccccc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background-color: rgba(150, 150, 150, 0.2);
+            border: 1px solid #999999;
+            color: #cccccc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Анимация для сообщений */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .show-message {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .options {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-content">
+            <div class="logo">
+                <img src="dragon.png" alt="Логотип компании">
+            </div>
+            <h1>Вход в систему</h1>
+            
+            <div id="successMessage" class="success-message">
+                Вы успешно вышли из системы!
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                Неверное имя пользователя или пароль.
+            </div>
+            
+            <form id="loginForm" onsubmit="return validateForm()">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" class="input-field" placeholder="Имя пользователя" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" class="input-field" placeholder="Пароль" required>
+                </div>
+                <div class="options">
+                    <label>
+                        <input type="checkbox" id="remember"> Запомнить меня
+                    </label>
+                    <a href="#">Забыли пароль?</a>
+                </div>
+                <button type="submit" class="login-btn">Войти</button>
+            </form>
+            
+            <div class="divider">
+                <span>или войти через</span>
+            </div>
+            
+            <div class="social-login">
+                <div class="social-btn facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-btn google">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div class="social-btn twitter">
+                    <i class="fab fa-twitter"></i>
+                </div>
+            </div>
+            
+            <div class="register-link">
+                Нет аккаунта? <a href="zhony.html">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Проверяем, был ли выход из системы
+        window.onload = function() {
+            // Получаем параметры URL
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Если есть параметр logout=true, показываем сообщение об успешном выходе
+            if (urlParams.get('logout') === 'true') {
+                document.getElementById('successMessage').classList.add('show-message');
+                
+                // Скрываем сообщение через 5 секунд
+                setTimeout(function() {
+                    document.getElementById('successMessage').classList.remove('show-message');
+                }, 5000);
+            }
+        };
+        
+        // Функция для валидации формы
+        function validateForm() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Простая проверка (в реальном проекте здесь был бы запрос к серверу)
+            if (username === 'admin' && password === 'admin') {
+                // Перенаправляем на главную страницу
+                window.location.href = 'main1.html';
+                return false; // Предотвращаем отправку формы
+            } else {
+                // Показываем сообщение об ошибке
+                document.getElementById('errorMessage').classList.add('show-message');
+                
+                // Скрываем сообщение через 3 секунды
+                setTimeout(function() {
+                    document.getElementById('errorMessage').classList.remove('show-message');
+                }, 3000);
+                
+                return false; // Предотвращаем отправку формы
+            }
+        }
+    </script>
+</body>
+</html>
